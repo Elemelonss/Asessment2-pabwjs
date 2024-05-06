@@ -1,6 +1,6 @@
 <?php
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "alatsekolah");
+$koneksi = new mysqli("localhost", "root","","alatsekolah");
 
 // Periksa koneksi
 if ($koneksi->connect_error) {

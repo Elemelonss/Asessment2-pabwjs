@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Barang Sekolah</title>
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Function to get data from server
+        function getData() {
+            $.ajax({
+                url: "get_data.php",
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    displayData(response);
+                }
+            });
+        }
+
+        // Function to display data in table
+        function displayData(data) {
+            $("#data-table").empty();
+
+            $.each(data, function(index, item) {
+                var row = "<tr>" +
+                            "<td>" + item.id + "</td>" +
+                            "<td>" + item.nama_barang + "</td>" +
+                            "<td>" + item.harga + "</td>" +
+                            "<td>" + item.stok + "</td>" +
+                            "<td><button onclick='deleteData(" + item.id + ")'>Hapus</button></td>" +
+                          "</tr>";
+                $("#data-table").append(row);
+            });
+        }
+
+        // Function to delete data
+        function deleteData(id) {
+            $.ajax({
+                url: "delete_data.php?id=" + id,
+                type: "GET",
+                success: function(response) {
+                    getData();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            getData();
+        });
+    </script>
+</head>
+<body>
+    <h1>Data Barang Sekolah</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama Barang</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan ditampilkan di sini -->
+        </tbody>
+    </table>
+</body>
+</html>
